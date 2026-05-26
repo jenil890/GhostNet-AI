@@ -40,7 +40,7 @@ export default function ScannerPage() {
 
         const response =
           await fetch(
-            "http://127.0.0.1:8000/scan-url",
+            "${process.env.NEXT_PUBLIC_API_URL}/scan-url",
             {
               method: "POST",
 
