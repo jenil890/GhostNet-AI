@@ -1,45 +1,62 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# AI Route
-from routes.ai import router as ai_router
-
-# URL Scanner Route
+# Import Routes
 from routes.scanner import router as scanner_router
 
-# FastAPI App
+# Create FastAPI App
 app = FastAPI(
-    title="GhostNet API",
-    description="Predictive Cyber Threat Intelligence Platform",
+    title="GhostNet AI Backend",
+    description="Cybersecurity Threat Intelligence API",
     version="1.0.0"
 )
 
-# CORS Configuration
+# =========================
+# CORS CONFIGURATION
+# =========================
+
 app.add_middleware(
     CORSMiddleware,
+
+    # Allow frontend domains
     allow_origins=["*"],
+
+    # Allow cookies/auth
     allow_credentials=True,
+
+    # Allow all methods
     allow_methods=["*"],
+
+    # Allow all headers
     allow_headers=["*"],
 )
 
-# Include Routes
-app.include_router(ai_router)
+# =========================
+# ROUTES
+# =========================
 
+# URL Scanner Routes
 app.include_router(scanner_router)
 
-# Root Route
+# =========================
+# ROOT ROUTE
+# =========================
+
 @app.get("/")
 async def root():
 
     return {
-        "message": "GhostNet API Running",
-        "status": "online"
+        "status": "online",
+        "message": "GhostNet Backend Running",
+        "service": "GhostNet AI Cybersecurity API"
     }
 
-# Health Check
+# =========================
+# HEALTH CHECK
+# =========================
+
 @app.get("/health")
-async def health():
+async def health_check():
 
     return {
         "status": "healthy"
